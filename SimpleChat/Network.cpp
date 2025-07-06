@@ -122,6 +122,14 @@ void Network::ReceiveLoop(SOCKET sock) {
         }
         buffer[bytesReceived] = '\0';
         std::cout << "\n" << buffer << "\n" << "\033[36m" << Network::YourName << "\033[0m" << " > ";
+        std::ofstream file("Server_log.txt", std::ios::app);
+        if (file.is_open()) {
+            file << buffer << "\n"; // Log the message to a file
+            file.close();
+        }
+        else {
+            std::cerr << "Failed to open chat log file.\n";
+        }
     }
 }
 
@@ -143,6 +151,15 @@ void Network::SendLoop(SOCKET sock) {
 
         std::string fullMsg = "\033[36m" + Network::YourName + "\033[0m" + ": " + msg;
         send(sock, fullMsg.c_str(), (int)fullMsg.length(), 0);
+
+		std::ofstream file("Client_log.txt", std::ios::app);
+		if (file.is_open()) {
+			file << fullMsg << "\n"; // Log the message to a file
+			file.close();
+		}
+		else {
+			std::cerr << "Failed to open chat log file.\n";
+		}
     }
 }
 
