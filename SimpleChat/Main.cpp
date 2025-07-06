@@ -25,14 +25,15 @@ int main() {
             if (Host())
                 std::cout << "Client connected successfully.\n";
             else
-                std::cout << "Failed to host.\n";
+                std::cout << "Failed to host.\n"; std::cout << "Press Enter to continue..." << std::endl; std::cin.ignore(); std::cin.get();
+            
         }
         else if (choice == 2) {
             std::string ip = Start();
             if (Connect(ip))
                 std::cout << "Connection established successfully.\n";
             else
-                std::cout << "Failed to establish connection.\n";
+                std::cout << "Failed to establish connection.\n"; std::cout << "Press Enter to continue..." << std::endl; std::cin.ignore(); std::cin.get();
         }
 
         break;  // remove this if you want to loop back to main menu
@@ -61,7 +62,7 @@ std::string Start() {
         std::cin >> ChatterIP;
 
         if (ChatterIP.empty() or !ChatterIP.contains("192.168")) {
-            std::cout << "\nInvalid IP address. Please enter a valid IP address.\n\n";
+            std::cout << "\nInvalid IP address. Please enter a valid IP address.\n\n"; std::cout << "Press Enter to continue..." << std::endl; std::cin.ignore(); std::cin.get();
 			continue; // Prompt again for a valid IP address
         }
         else
@@ -74,6 +75,8 @@ bool Connect(const std::string& ip) {
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         std::cerr << "WSAStartup failed\n";
+        std::cout << "Press Enter to continue..." << std::endl;
+        std::cin.ignore(); std::cin.get();
         return false;
     }
 
@@ -81,6 +84,8 @@ bool Connect(const std::string& ip) {
     if (sock == INVALID_SOCKET) {
         std::cerr << "Socket creation failed\n";
         WSACleanup();
+        std::cout << "Press Enter to continue..." << std::endl;
+        std::cin.ignore(); std::cin.get();
         return false;
     }
 
@@ -101,15 +106,19 @@ bool Connect(const std::string& ip) {
         std::cerr << "Failed to connect.\n";
         closesocket(sock);
         WSACleanup();
+        std::cout << "Press Enter to continue..." << std::endl;
+        std::cin.ignore(); std::cin.get();
         return false;
     }
 
     std::cout << "Connected successfully!\n";
-
+    std::cout << "Press Enter to continue..." << std::endl;
+    std::cin.ignore(); std::cin.get();
     // TODO: Send/receive chat messages here
 
     closesocket(sock);
     WSACleanup();
+    std::cout << "Press Enter to continue..." << std::endl; std::cin.ignore(); std::cin.get();
     return true;
 }
 
@@ -117,6 +126,8 @@ bool Host() {
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         std::cerr << "WSAStartup failed.\n";
+        std::cout << "Press Enter to continue..." << std::endl;
+        std::cin.ignore(); std::cin.get();
         return false;
     }
 
@@ -168,5 +179,6 @@ bool Host() {
     closesocket(clientSocket);
     closesocket(listenSocket);
     WSACleanup();
+    std::cout << "Press Enter to continue..." << std::endl; std::cin.ignore(); std::cin.get();
     return true;
 }
