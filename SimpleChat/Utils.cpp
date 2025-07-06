@@ -6,6 +6,7 @@
 #include <ctime>
 #include <chrono>
 #include <cstdio>
+#include <string>
 
 int Utils::getRandomNumber(int min, int max) {
 	static std::random_device rd;  // Seed
@@ -49,7 +50,7 @@ void Utils::SaveToFile(const std::string& filename, std::string Input) {
 		file.close();
 	}
 	else {
-		Utils::Exit(1, "Error opening file.\nRun as administrator.\n"); // Exit if the file cannot be opened CODE: 1
+		Utils::Exit(1, "Error opening file.\nTry running as administrator.\n"); // Exit if the file cannot be opened CODE: 1
 	}
 }
 
